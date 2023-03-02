@@ -1,5 +1,6 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
+import os
 
 # Create object of ChatBot class with Storage and Logic Adapter
 bot = ChatBot('Karty',
@@ -18,14 +19,14 @@ bot = ChatBot('Karty',
               input_adapter='chatterbot.input.TerminalAdapter',
               output_adapter='chatterbot.output.TerminalAdapter',
               database='conversations',
-              database_uri='mysql+pymysql://admin:3X47Qy!b@project-karty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com'
+              database_uri='mysql+pymysql://admin:3X47Qy!b@projectkarty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com'
                            '/conversations'
               )
 
-# Training With Own Questions
+# # Training With Own Questions
 trainer = ListTrainer(bot)
-# Get data from lists
-training_data_questions = open('training_data/health_qn.txt').read().splitlines()
-training_data_personal = open('training_data/personal_qn.txt').read().splitlines()
-training_data = training_data_questions + training_data_personal
-trainer.train(training_data)
+for file in os.listdir('data'):
+    print('Training using ' + file)
+    training_data = open('data/' + file).readlines()
+    trainer.train(training_data)
+    print("Training completed for " + file)
