@@ -10,12 +10,9 @@ app = Flask(__name__)
 # Create an SQLite DB
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
 
-# Add Database via MySQl on Local Machine
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:IdlP#bxj59@localhost/conversations'
+#Add Database via MySQl on Local Machine
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:password@localhost/conversations'
 
-# Add Database via MySQL on AWS
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:3X47Qy!b@project-karty.cmoarzscfdhk.eu-west-2.rds' \
-                                        '.amazonaws.com/conversations'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Secret Key

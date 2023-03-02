@@ -1,17 +1,10 @@
 import mysql.connector
 
-# # To create database on local machine
-# mydb = mysql.connector.connect(
-# 	host="localhost",
-# 	user="root",
-# 	passwd='password',  # edit this with your MySQL password
-# 	)
-
 # To create database on local machine
 mydb = mysql.connector.connect(
-	host="project-karty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com",
-	user="admin",
-	passwd='3X47Qy!b',  # edit this with your AWS database instance password
+	host="localhost",
+	user="root",
+	passwd='password',  # edit this with your MySQL password
 	)
 
 
