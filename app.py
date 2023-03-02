@@ -6,10 +6,18 @@ from datetime import datetime
 from chat import bot
 
 app = Flask(__name__)
-# Add Database/MySQl
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:IdlP#bxj59@localhost/conversations'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:IdlP#bxj59@localhost/our_users'
+
+# Create an SQLite DB
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
+# Add Database via MySQl on Local Machine
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:IdlP#bxj59@localhost/conversations'
+
+# Add Database via MySQL on AWS
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://admin:3X47Qy!b@project-karty.cmoarzscfdhk.eu-west-2.rds' \
+                                        '.amazonaws.com/conversations'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 # Secret Key
 app.config['SECRET_KEY'] = "No one knows what it is"
 
@@ -17,7 +25,7 @@ app.config['SECRET_KEY'] = "No one knows what it is"
 db = SQLAlchemy(app)
 
 # Create a Model
-# class Conversations(db.Model):
+# class Users(db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     name = db.Column(db.String(255), nullable=False)
 #     email = db.Column(db.String(255), nullable=False)

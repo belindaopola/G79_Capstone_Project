@@ -1,7 +1,6 @@
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 
-
 # Create object of ChatBot class with Storage and Logic Adapter
 bot = ChatBot('Karty',
               storage_adapter='chatterbot.storage.SQLStorageAdapter',
@@ -19,7 +18,8 @@ bot = ChatBot('Karty',
               input_adapter='chatterbot.input.TerminalAdapter',
               output_adapter='chatterbot.output.TerminalAdapter',
               database='conversations',
-              database_uri='mysql+pymysql://root:IdlP#bxj59@localhost/conversations'
+              database_uri='mysql+pymysql://admin:3X47Qy!b@project-karty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com'
+                           '/conversations'
               )
 
 # Training With Own Questions
