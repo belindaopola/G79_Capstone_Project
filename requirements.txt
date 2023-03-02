@@ -2,7 +2,6 @@
 # Usage: pip install -r requirements.txt
 # Project implements MySQL, Install MySQL Server 8.0.32 in your environment or connect to RDS on AWS
 
-
 alembic==1.4.3
 cachelib==0.10.2
 cffi==1.14.5
