@@ -19,8 +19,7 @@ bot = ChatBot('Karty',
               input_adapter='chatterbot.input.TerminalAdapter',
               output_adapter='chatterbot.output.TerminalAdapter',
               database='conversations',
-              database_uri='mysql+pymysql://admin:3X47Qy!b@projectkarty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com'
-                           '/conversations'
+              database_uri='mysql+pymysql://root:[yourpassword]@localhost/conversations'
               )
 
 # # Training With Own Questions

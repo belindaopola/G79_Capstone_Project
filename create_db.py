@@ -2,9 +2,9 @@ import mysql.connector
 
 # To create database on local machine
 mydb = mysql.connector.connect(
-    host="projectkarty.cmoarzscfdhk.eu-west-2.rds.amazonaws.com",
-    user="admin",
-    passwd='3X47Qy!b',  # edit this with your MySQL password
+    host="localhost",
+    user="root",
+    passwd='[yourpassword]',  # edit this with your MySQL password
 )
 
 my_cursor = mydb.cursor()
