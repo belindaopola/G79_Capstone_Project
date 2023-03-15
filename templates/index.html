@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "layout.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Bot</title>
+{% block body %}
 
-    <link rel="stylesheet" href="static/css/chat.css">
-    <link rel="stylesheet" href="static/css/home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% if session["name"] %}
+        You are logged in as {{ session["name"] }}. <a href="/logout">Log out</a>.
+    {% else %}
+        You are not logged in. <a href="/login">Log in</a>.
+    {% endif %}
 
-</head>
-
-<body>
-    <!-- CHAT BAR BLOCK -->
+        <!-- CHAT BAR BLOCK -->
     <div class="chat-bar-collapsible">
         <button id="chat-button" type="button" class="collapsible">Chat with us!
             <i id="chat-icon" style="color: #fff;" class="fa fa-fw fa-comments-o"></i>
@@ -45,11 +39,113 @@
                                 <i id="chat-icon" style="color: #333;" class="fa fa-fw fa-send"
                                     onclick="sendButton()"></i>
                             </div>
+                            <script>
+                            // Collapsible
+                                let coll = document.getElementsByClassName("collapsible");
 
+                                for (let i = 0; i < coll.length; i++) {
+                                    coll[i].addEventListener("click", function () {
+                                        this.classList.toggle("active");
+
+                                       let content = this.nextElementSibling;
+
+                                        if (content.style.maxHeight) {
+                                            content.style.maxHeight = null;
+                                        } else {
+                                            content.style.maxHeight = content.scrollHeight + "px";
+                                        }
+
+                                    });
+                                }
+
+                                function getTime() {
+                                    let today = new Date();
+                                    let hours = today.getHours();
+                                    let minutes = today.getMinutes();
+
+                                    if (hours < 10) {
+                                        hours = "0" + hours;
+                                    }
+
+                                    if (minutes < 10) {
+                                        minutes = "0" + minutes;
+                                    }
+
+                                    let time = hours + ":" + minutes;
+                                    return time;
+                                }
+
+                                // Gets the first message
+                                function firstBotMessage() {
+                                    let firstMessage = "Hi, Iam Karty, how may I help you?"
+                                    document.getElementById("botStarterMessage").innerHTML = '<p class="botText"><span>' + firstMessage + '</span></p>';
+
+                                    let time = getTime();
+
+                                    $("#chat-timestamp").append(time);
+                                    document.getElementById("userInput").scrollIntoView(false);
+                                }
+
+                                firstBotMessage();
+
+                                // Get response from chatterbot
+                                function getBotResponse() {
+
+                                    let userText = $("#textInput").val();
+                                    if (userText == "") {
+                                        userText = "Hello!";
+                                    }
+                                    let userHtml = '<p class="userText"><span>' + userText + '</span></p>';
+                                    $("#textInput").val("");
+                                    $("#chatbox").append(userHtml);
+                                    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+                                    $.get("/get", {msg: userText}).done(function (data){
+                                        let botHtml = '<p class="botText"><span>' + data + '</span></p>';
+                                        $("#chatbox").append(botHtml);
+                                        document.getElementById('userInput').scrollIntoView(true);
+                                    });
+                                }
+
+                                setTimeout(() => {
+                                    getBotResponse(userText);
+                                }, 1000)
+
+                                // Handles sending text via button clicks
+                                function buttonSendText(sampleText) {
+                                    let userHtml = '<p class="userText"><span>' + sampleText + '</span></p>';
+
+                                    $("#textInput").val("");
+                                    $("#chatbox").append(userHtml);
+                                    document.getElementById("chat-bar-bottom").scrollIntoView(true);
+
+                                    //Uncomment this if you want the bot to respond to this buttonSendText event
+                                    setTimeout(() => {
+                                        getBotResponse(sampleText);
+                                    }, 1000)
+                                }
+
+                                    function sendButton() {
+                                        getBotResponse();
+                                    }
+
+                                    function heartButton() {
+                                        buttonSendText("Emoji clicked!")
+                                    }
+
+                                    // Press enter to send a message
+                                    $("#textInput").keypress(function (e) {
+                                        if (e.which == 13) { //code for enter button
+                                            getBotResponse();
+                                        }
+                                    });
+
+                            </script>
                         </div>
 
                         <div id="chat-bar-bottom">
                             <p></p>
+
                         </div>
 
                     </div>
@@ -60,9 +156,4 @@
 
     </div>
 
-</body>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="static/scripts/responses.js"></script>
-<script src="static/scripts/chat.js"></script>
-</html>
+{% endblock %}
